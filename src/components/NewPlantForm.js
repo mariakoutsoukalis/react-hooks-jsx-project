@@ -1,6 +1,24 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 
 function NewPlantForm() {
+const [plant, setNewPlant] = useState([])
+const newPlant = {name, image, price}
+
+useEffect(() => {
+fetch("http://localhost:6001/plants", {
+  method: "POST",
+  headers: {
+    "Content-type": "application/json",
+  },
+  body: JSON.stringify(
+    {...newPlant})
+})
+  .then(response => response.json())
+  .then(data => {
+    setNewPlant(data.plant)
+  })
+},[]);
+
   return (
     <div className="new-plant-form">
       <h2>New Plant</h2>
