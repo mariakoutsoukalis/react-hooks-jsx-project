@@ -1,30 +1,28 @@
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 
-function PlantCard() {
-const [plants, setPlants] = useState([])
-  useEffect(() => {
-    fetch('http://localhost:6001/plants')
-      .then(res => res.json())
-      .then(data => setPlants(data.plants))
-  }, [])
-  
+function PlantCard({ plant }) {
+  const [inStock, setInStock] = useState(true)
+
+  const { name, price, image } = plant
+
   return (
-    <div>
-      {plants.map(plant => (
     <li className="card">
-      <img src={plant.image} alt={plant.name} />
-      <h4>{plant.name}</h4>
-      <p>Price: {plant.price}</p>
-    
-      {true ? (
-        <button className="primary">In Stock</button>
+      <img src={image} alt={name} />
+      <h4>{name}</h4>
+      <p>Price: {price}</p>
+      {/* {inStock ? (
+        <button onClick={() => setInStock(!inStock)} className="primary">In Stock</button>
       ) : (
-        <button>Out of Stock</button>
-      )}
+        <button onClick={() => setInStock(!inStock)} >Out of Stock</button>
+      )} */}
+      
+      {/* another solution to handle conditional rendering by using one button */}
+      <button onClick={() => setInStock(!inStock)} className={inStock ? "primary" : ''}>
+        {inStock ? "In Stock" : "Out of Stock"}
+      </button>
+
     </li>
-    ))}
-    </div>
-    )
-  }
+  );
+}
 
 export default PlantCard;
